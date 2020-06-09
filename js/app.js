@@ -1,114 +1,120 @@
-  /**
-   *
-   * PHRASE.JS SECTION
-   *
-   */
-
-
-   /* Treehouse FSJS Techdegree
-    * Project 4 - OOP Game App
-    * Phrase.js */
+/* Treehouse FSJS Techdegree
+  * Project 4 - OOP Game App
+  * Phrase.js */
 class Phrase{
-	constructor(phrase){
-		this.phrase = phrase.toLowerCase();
-console.log('phrase maker');
-	}
+   constructor(phrase){//works
+        this.phrase = phrase.toLowerCase();
+}
 
-	addPhraseToDisplay(){//needs Work
-		const ul = document.getElementById('phrase');
-		let letter = this.phrase.split('')
-		let li = document.createElement('li');
-		li.innerHTML = `<li class="hide letter ${this.letter}">${this.letter}</li>`
-		if(this.letter !== ""){
-			li.class = `hide letter ${this.letter}`;
-		}else{li.class = "space"};
-		ul.appendChild(li);
-	}
+   addPhraseToDisplay(aPhrase){//needs Work
+        aPhrase = aPhrase;
+console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The other is the phrase. Test the program.
+        const ul = document.getElementById('phrase');
+        let letter = aPhrase.phrase.split('')
+        letter.forEach((letter, index) => {
+             let li = document.createElement('li');
+             li.innerHTML = `<li class="hide letter ${this.letter}">${this.letter}</li>`
+             if(this.letter !== ""){
+                  li.class = `hide letter ${this.letter}`;
+             }else{li.class = "space"};
+             ul.appendChild(li);
+             letsPlay();
+        });
 
-	checkLetter(e){
 
-	}
+   }
 
-	showMatchedLetter(e){
+   checkLetter(e){
 
-	}
+   }
+
+   showMatchedLetter(e){
+
+   }
 }
 
 
-// const phrases = [
-// 	'I Smell a Rat',
-// 	'Fit as a Fiddle',
-// 	'A Piece of Cake',
-// 	'Put a Sock In It',
-// 	'Close But No Cigar'
-// ];
-// const newPhrase = new Phrase(`${phrases[Math.floor(Math.random()*phrases.length)]}`);
-// newPhrase.addPhraseToDisplay();
-// console.log(newPhrase);
 
 
 
-   /**
-    *
-    * GAME.JS SECTION
-    *
-    */
 
 
-    /* Treehouse FSJS Techdegree
-     * Project 4 - OOP Game App
-     * Game.js */
 
+
+/* Treehouse FSJS Techdegree
+* Project 4 - OOP Game App
+* Game.js */
+let phrases = [];
 class Game{
-  	constructor(){
-console.log("new game");
-		let missed = 0;
-		const phrases = [
-			'I Smell a Rat',
-			'Fit as a Fiddle',
-			'A Piece of Cake',
-			'Put a Sock In It',
-			'Close But No Cigar'
-		];
-console.log(phrases.length);
-		let activePhrase = null;
-	}
-	startGame(){
-console.log(this.phrases);
-		const div = document.getElementById('overlay');
-		div.style.display = 'none';
-		const activePhrase = new Phrase(`${this.phrases[Math.floor(Math.random()*this.phrases.length)]}`)
-		activePhrase.addPhraseToDisplay();
-	}
+constructor(){//works
+      this.missed = 0;
+      phrases = [
+           'I Smell a Rat',
+           'Fit as a Fiddle',
+           'A Piece of Cake',
+           'Put a Sock In It',
+           'Close But No Cigar'
+      ];
+      let activePhrase = null;
+}
+startGame(){//works
+      const div = document.getElementById('overlay');
+      div.style.display = 'none';//make the overlay go away
+      this.activePhrase = this.getRandomPhrase();
+      this.activePhrase.addPhraseToDisplay(this.activePhrase);
+}
 
-  	handleInteraction(){
-  		removeLife()
-  		showMatchedLetter()
-  		checkForWin()
-  		gameOver()
-	}
+getRandomPhrase(){//works
+	let aPhrase = new Phrase(`${phrases[Math.floor(Math.random()*phrases.length)]}`)
+      return aPhrase //return the object
+};
 
-  	removeLife(){}
-  	checkForWin(){}
-	gameOver(){}
+handleInteraction(){
+      removeLife()
+      showMatchedLetter()
+      checkForWin()
+      gameOver()
+}
+
+removeLife(){}
+checkForWin(){}
+gameOver(){}
 
 }
 
 
-/**
- *
- * APP.JS SECTION
- *
- */
+
+
+
+
+
+
+
+
 
 
  /* Treehouse FSJS Techdegree
   * Project 4 - OOP Game App
   * app.js */
-
-const start_btn = document.getElementById('btn__reset');
-start_btn.addEventListener('click', (e) =>{
-	const newGame = new Game();
+//let newGame;
+const start_btn = document.getElementById('btn__reset').addEventListener('click', (e) =>{
+	let newGame = new Game();
 	newGame.startGame();
-//console.log('start_btn');
+     event.preventDefault();
 })
+
+//event handler added to the on-screen keyboard only
+const letsPlay = function(){
+     console.log('lets play');
+     const kb = document.getElementById('qwerty').addEventListener('click', (e) => {
+               this.handleInteraction()
+//                let target = e.target.innerHTML
+ console.log(target);
+//                if(target === ){
+//
+//                }
+               event.preventDefault();     //for each newGame.handleInteraction()
+          })
+     }
+
+//}
