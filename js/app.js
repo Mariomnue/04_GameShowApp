@@ -33,14 +33,14 @@ console.log(ul);
 
    showMatchedLetter(e){
      let target = e;
-
      letter.forEach((letter, index) => {
           if(target.innerHTML === letter){
-console.log();
+console.log(index);
                let chL = document.getElementsByClassName(`hide letter ${letter}`)//phrase letters
-               chL.className = 'show';
+               chL[0].className = `show`;
+               chL.innerHTML = letter;
 
-console.log(chL.innerHTML);
+console.log(chL[0].textContext+ '  ' +chL);
           }
      });
 //`show letter ${letter}`
