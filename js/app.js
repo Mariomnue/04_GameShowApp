@@ -1,28 +1,31 @@
 /* Treehouse FSJS Techdegree
   * Project 4 - OOP Game App
   * Phrase.js */
+let letter;
 class Phrase{
-   constructor(phrase){//works
-        this.phrase = phrase.toLowerCase();
+     constructor(phrase){//works
+          this.phrase = phrase.toLowerCase();
 }
 
-   addPhraseToDisplay(aPhrase){//needs Work
-        aPhrase = aPhrase;
+     addPhraseToDisplay(aPhrase){//needs Work
+          aPhrase = aPhrase;
 console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The other is the phrase. Test the program.
-        const ul = document.getElementById('phrase');
-        let letter = aPhrase.phrase.split('')
-        letter.forEach((letter, index) => {
-             let li = document.createElement('li');
-             li.innerHTML = `<li class="hide letter ${this.letter}">${this.letter}</li>`
-             if(this.letter !== ""){
-                  li.class = `hide letter ${this.letter}`;
-             }else{li.class = "space"};
-             ul.appendChild(li);
-             letsPlay();
-        });
+          const ul = document.getElementById('phrase');
+          letter = aPhrase.phrase.split('')
+          letter.forEach((letter, index) => {
+               let li = document.createElement('li');
+               li.innerHTML = `<li class="hide letter ${letter}">${letter}</li>`
+               if(this.letter !== ""){
+                    li.class = `hide letter ${letter}`;
+               }else{li.class = "space"};
+               ul.appendChild(li);
+          });
+          letsPlay();
+     }
 
 
-   }
+
+
 
    checkLetter(e){
 
@@ -69,11 +72,33 @@ getRandomPhrase(){//works
       return aPhrase //return the object
 };
 
-handleInteraction(){
-      removeLife()
-      showMatchedLetter()
-      checkForWin()
-      gameOver()
+handleInteraction(e){
+//console.log('handleInteraction');
+     let target = e;
+     letter.forEach((letter, index) => {
+          target.disabled = true;
+          target.style.color = 'gray';
+          if(letter !== target.innerHTML){//NO Match
+console.log('they do not match ' +target);
+               target.class = 'wrong';
+               if(target){
+
+               }
+               //this.li.class = 'chosen';
+
+          }
+          else{//matched
+               target.class = 'chosen'
+          }
+console.log(target.innerHTML+ ' '+this.activePhrase.phrase);
+});
+     // if(){
+     //
+     // }
+      // removeLife()
+      // showMatchedLetter()
+      // checkForWin()
+      // gameOver()
 }
 
 removeLife(){}
@@ -96,25 +121,22 @@ gameOver(){}
  /* Treehouse FSJS Techdegree
   * Project 4 - OOP Game App
   * app.js */
-//let newGame;
+let newGame;
 const start_btn = document.getElementById('btn__reset').addEventListener('click', (e) =>{
-	let newGame = new Game();
+	newGame = new Game();
 	newGame.startGame();
      event.preventDefault();
 })
 
+let kb;
 //event handler added to the on-screen keyboard only
 const letsPlay = function(){
      console.log('lets play');
-     const kb = document.getElementById('qwerty').addEventListener('click', (e) => {
-               this.handleInteraction()
-//                let target = e.target.innerHTML
- console.log(target);
-//                if(target === ){
-//
-//                }
-               event.preventDefault();     //for each newGame.handleInteraction()
+     kb = document.getElementById('qwerty').addEventListener('click', (e) => {
+          let target = e.target
+          newGame.handleInteraction(target);
+          event.preventDefault();
           })
      }
 
-//}
+//}e.target.innerHTML
