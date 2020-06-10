@@ -17,12 +17,10 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
                if(letter === " "){
                     li.className =  `space`;
                }else{li.className = `hide letter ${letter}`};
-console.log(ul);
                ul.appendChild(li);
           });
-//          ul.appendChild(li);
-
           letsPlay();
+console.log(ul);
      }
 
 
