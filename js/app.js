@@ -10,16 +10,18 @@ class Phrase{
      addPhraseToDisplay(aPhrase){//needs Work
           aPhrase = aPhrase;
 console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The other is the phrase. Test the program.
-          const ul = document.getElementById('phrase');
+          const ul = document.getElementById('phrase').firstElementChild;
           letter = aPhrase.phrase.split('')
           letter.forEach((letter, index) => {
                let li = document.createElement('li');
-               li.innerHTML = `<li class="hide letter ${letter}">${letter}</li>`
-               if(this.letter !== ""){
-                    li.class = `hide letter ${letter}`;
-               }else{li.class = "space"};
+               if(letter === " "){
+                    li.className =  `space`;
+               }else{li.className = `hide letter ${letter}`};
+console.log(ul);
                ul.appendChild(li);
           });
+//          ul.appendChild(li);
+
           letsPlay();
      }
 
@@ -32,7 +34,22 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
    }
 
    showMatchedLetter(e){
+     let target = e;
 
+     letter.forEach((letter, index) => {
+          if(target.innerHTML === letter){
+console.log();
+               let chL = document.getElementsByClassName(`hide letter ${letter}`)//phrase letters
+               chL.className = 'show';
+
+console.log(chL.innerHTML);
+          }
+     });
+//`show letter ${letter}`
+
+
+
+console.log('showMatchedLetter '+this.phrase+ '  ' +target.innerHTML);
    }
 }
 
@@ -75,31 +92,32 @@ getRandomPhrase(){//works
 handleInteraction(e){
 //console.log('handleInteraction');
      let target = e;
+     target.disabled = true;
+     target.style.color = 'white';//////style not right
      letter.forEach((letter, index) => {
-          target.disabled = true;
-          target.style.color = 'gray';
           if(letter !== target.innerHTML){//NO Match
-console.log('they do not match ' +target);
-               target.class = 'wrong';
-               if(target){
+console.log('they do not match ' +letter+ '   ' +target.innerHTML);
+               target.class = 'wrong';///////how to call the on-screen keyboad
+               //removeLife();
+          }else{//matched
+               target.class = 'chosen'///////how to call the on-screen keyboad
 
-               }
-               //this.li.class = 'chosen';
+               this.activePhrase.showMatchedLetter(target);//in the Phrase class
 
+               //if(checkForWin()){//true
+               //     gameOver();
+               //}
+console.log('they DO match ' +target.innerHTML);
           }
-          else{//matched
-               target.class = 'chosen'
-          }
+
+     })
 console.log(target.innerHTML+ ' '+this.activePhrase.phrase);
-});
-     // if(){
-     //
-     // }
+};
       // removeLife()
       // showMatchedLetter()
       // checkForWin()
       // gameOver()
-}
+
 
 removeLife(){}
 checkForWin(){}
