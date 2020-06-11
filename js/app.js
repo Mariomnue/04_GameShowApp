@@ -14,13 +14,14 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
           letter = aPhrase.phrase.split('')
           letter.forEach((letter, index) => {
                let li = document.createElement('li');
+               li.innerHTML = letter;
                if(letter === " "){
                     li.className =  `space`;
                }else{li.className = `hide letter ${letter}`};
                ul.appendChild(li);
           });
           letsPlay();
-console.log(ul);
+//console.log(ul);
      }
 
 
@@ -35,19 +36,11 @@ console.log(ul);
      let target = e;
      letter.forEach((letter, index) => {
           if(target.innerHTML === letter){
-console.log(index);
                let chL = document.getElementsByClassName(`hide letter ${letter}`)//phrase letters
                chL[0].className = `show`;
                chL.innerHTML = letter;
-
-console.log(chL[0].textContext+ '  ' +chL);
           }
      });
-//`show letter ${letter}`
-
-
-
-console.log('showMatchedLetter '+this.phrase+ '  ' +target.innerHTML);
    }
 }
 
