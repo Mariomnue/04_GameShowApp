@@ -29,28 +29,36 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
 
 
    checkLetter(e, letter){
-     let target = e;
-console.log('chE  '+letter+ '  ' +target.innerHTML);
      if(letter !== target.innerHTML){//NO Match
-          target.className = 'wrong';
           return false;
      }else{//matched
-          target.className = 'chosen'
-          this.showMatchedLetter(e, letter);
           return true;
      }
    }
 
-   showMatchedLetter(e){
+   showMatchedLetter(e, letter){
      let target = e;
-     letter.forEach((letter, index) => {
-          //letter.className = 'show';
-console.log(letter);
-          letter.classList.add('show');
-          letter.classList.remove('hide');
+     //letter = letter;
+     //letter.forEach((letter, index) => {
+          let chL = document.getElementsByClassName(`hide letter ${letter}`);
+          //chL.className = `show letter ${letter}`;
+          console.log("chL.length " +chL.length);
+//letter.className = 'show';
+          for(let i=0; i<chL.length; i++){
+               chL[i].classList.add('show');
+               chL[i].classList.remove('hide');
 
-          //let chL = document.getElementsByClassName(`hide letter ${letter}`);
-          })
+          };
+
+
+//          chL[1].className.replace('hide', 'show')
+
+          //chL[0].classList.remove(/^hide\sletter\s\$\{letter\}$/);
+          //chL[0].classList.add(`show letter ${letter}`);
+          //chL[0].classList.add(/^show\sletter\s\$\{letter\}$/);
+
+
+          //})
      }
 }
 
@@ -97,21 +105,21 @@ handleInteraction(e){
 //     this.letter.checkLetter(e);
      letter.forEach((letter, index) => {
 // console.log(letter+ ' ' +target.innerHTML);
-          const filterLetter = this.activePhrase.checkLetter(target, letter);
-//           if(letter !== target.innerHTML){//NO Match
+          //const filterLetter = this.activePhrase.checkLetter(target, letter);
+           if(letter !== target.innerHTML){//NO Match
 // //console.log('do not ' +letter+ '   ' +target.innerHTML);
-//                target.className = 'wrong';
+                target.className = 'wrong';
 //                //removeLife();
-//           }else{//matched
-//                target.className = 'chosen'
+           }else{//matched
+                target.className = 'chosen'
 //
-//                this.activePhrase.showMatchedLetter(target);//in the Phrase class
+                this.activePhrase.showMatchedLetter(target, letter);//in the Phrase class
 //
 //                //if(checkForWin()){//true
 //                //     gameOver();
 //                //}
 //console.log('DO ' +target.innerHTML);
-//        }
+        }
 //
      })
 //console.log(target.innerHTML+ ' '+this.activePhrase.phrase);
