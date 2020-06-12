@@ -28,24 +28,31 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
 
 
 
-   checkLetter(e){
-
+   checkLetter(e, letter){
+     let target = e;
+console.log('chE  '+letter+ '  ' +target.innerHTML);
+     if(letter !== target.innerHTML){//NO Match
+          target.className = 'wrong';
+          return false;
+     }else{//matched
+          target.className = 'chosen'
+          this.showMatchedLetter(e, letter);
+          return true;
+     }
    }
 
    showMatchedLetter(e){
      let target = e;
      letter.forEach((letter, index) => {
-          if(target.innerHTML === letter){
-               let chL = document.getElementsByClassName(`hide letter ${letter}`)//phrase letters
-               chL[0].className = `show`;
-               chL.innerHTML = letter;
-          }
-     });
-   }
+          //letter.className = 'show';
+console.log(letter);
+          letter.classList.add('show');
+          letter.classList.remove('hide');
+
+          //let chL = document.getElementsByClassName(`hide letter ${letter}`);
+          })
+     }
 }
-
-
-
 
 
 
@@ -70,7 +77,8 @@ constructor(){//works
 }
 startGame(){//works
       const div = document.getElementById('overlay');
-      div.style.display = 'none';//make the overlay go away
+      div.style.display = 'none';
+      div.disabled = true;//make the overlay go away
       this.activePhrase = this.getRandomPhrase();
       this.activePhrase.addPhraseToDisplay(this.activePhrase);
 }
@@ -84,25 +92,29 @@ handleInteraction(e){
 //console.log('handleInteraction');
      let target = e;
      target.disabled = true;
-     target.style.color = 'white';//////style not right
+     //target.style.color = 'white';//////style not right
+
+//     this.letter.checkLetter(e);
      letter.forEach((letter, index) => {
-          if(letter !== target.innerHTML){//NO Match
-console.log('they do not match ' +letter+ '   ' +target.innerHTML);
-               target.class = 'wrong';///////how to call the on-screen keyboad
-               //removeLife();
-          }else{//matched
-               target.class = 'chosen'///////how to call the on-screen keyboad
-
-               this.activePhrase.showMatchedLetter(target);//in the Phrase class
-
-               //if(checkForWin()){//true
-               //     gameOver();
-               //}
-console.log('they DO match ' +target.innerHTML);
-          }
-
+// console.log(letter+ ' ' +target.innerHTML);
+          const filterLetter = this.activePhrase.checkLetter(target, letter);
+//           if(letter !== target.innerHTML){//NO Match
+// //console.log('do not ' +letter+ '   ' +target.innerHTML);
+//                target.className = 'wrong';
+//                //removeLife();
+//           }else{//matched
+//                target.className = 'chosen'
+//
+//                this.activePhrase.showMatchedLetter(target);//in the Phrase class
+//
+//                //if(checkForWin()){//true
+//                //     gameOver();
+//                //}
+//console.log('DO ' +target.innerHTML);
+//        }
+//
      })
-console.log(target.innerHTML+ ' '+this.activePhrase.phrase);
+//console.log(target.innerHTML+ ' '+this.activePhrase.phrase);
 };
       // removeLife()
       // showMatchedLetter()
@@ -149,3 +161,9 @@ const letsPlay = function(){
      }
 
 //}e.target.innerHTML
+
+document.addEventListener('keyup', (e) =>{
+     if(document.getElementById('overlay').style.display === 'none'){
+          newGame.handleInteraction(e.key);
+     }
+})
