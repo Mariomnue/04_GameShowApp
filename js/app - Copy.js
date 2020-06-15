@@ -12,31 +12,38 @@ class Phrase{
 console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The other is the phrase. Test the program.
 		const ul = document.getElementById('phrase').firstElementChild;
 		letter = aPhrase.phrase.split('');
-		 	letter.forEach((letter, index) => {
-				let li = document.createElement('li');
-				li.innerHTML = letter;
-				if(letter === " "){
-					li.className =  `space`;
-				}else{li.className = `hide letter ${letter}`};
-				ul.appendChild(li);
-			});
+		//letter = letter.map(letter => {
+			let li = document.createElement('li');
+			li.innerHTML = letter;
+			if(letter === " "){
+				li.className =  `space`;
+			}else{li.className = `hide letter ${letter}`};
+			ul.appendChild(li);
+		//});
 //console.log(ul);
 	}
 
 
 
 
-//does the keyup match any letter in the phrase
-//create a boolean, an HTMLCollection with 0 length/which is true, return false.
-	checkLetter(letter){////unsure
-console.log(document.getElementsByClassName(letter));
-		const boolean = document.getElementsByClassName(letter).length === 0;
-		return !boolean;
-	}
 
-	showMatchedLetter(e, letter){//works
-		letter = e;
+	checkLetter(e){//does the keyup match any letter in the phrase
+	   let target = e;
+//console.log('checkLetter'+target);
+console.log('checkLetter '+letter+ '   ' +target);
+	if(letter !== target){//NO Match
+		//newGame.removeLife();	//needs work
+		return false;
+	}else{//matched
+//console.log('checkLetter ' +letter+ ' is true');
+		return true;
+	}
+   }
+
+	showMatchedLetter(e, letter){
+	let target = e;
 		let chL = document.getElementsByClassName(`hide letter ${letter}`);
+//		console.log("chL.length " +chL.length);
 		for(let i=0; i<chL.length; i++){
 			chL[i].classList.add('show');
 			chL[i].classList.remove('hide');
@@ -82,25 +89,42 @@ handleInteraction(e){
 	let target = e.target;
 	target.disabled = true;
 	let chosenLetter = e.target.innerHTML;
-		if(this.activePhrase.checkLetter(letter)){//not a key
-			target.className = 'wrong'//do nothing/something
-			newGame.removeLife();
-		}else{
-			letter.forEach((letter, index) => {
-	console.log(letter+ '  ' +target.innerHTML);
-			if(target.innerHTML === letter){//click and letter match
-	console.log("letter is true");
-				target.className = 'chosen';
-				this.activePhrase.showMatchedLetter(letter);
-			}
-			if(newGame.checkForWin ===  true){//did you win? needs work
-				newGame.gameOver;//true
-			}
-		});
-	}
-	//}
-}//);
-//}//end handleInteraction
+console.log('chosenLetter: ' +chosenLetter);//looking for the value of the key
+	if(!this.activePhrase.checkLetter(chosenLetter)){//not a key
+		target.className = 'wrong'//do nothing/something to prevent action
+		newGame.removeLife();
+	}else{
+		letter.forEach((letter, index) => {
+		if(target.innerHTML === letter){//click and letter match
+console.log("letter is true");
+			target.className = 'chosen';
+			this.activePhrase.showMatchedLetter(letter);
+		}
+		if(newGame.checkForWin){//did you win? needs work
+			//newGame.gameOver;//true
+		}
+	});
+}
+
+
+
+	// }else{//matched
+	// 	this.activePhrase.forEach((letter, index) => {
+	// 		if(letter !== target){
+	// 			target.className = 'wrong'
+	// 		}else{
+	// 			if(this.activePhrase.checkLetter(target, letter)){
+	// 				target.className = 'chosen'
+	// 				this.activePhrase.showMatchedLetter(target, letter);//in Phrase class
+	// 				if(newGame.checkForWin){//needs work
+	// 					//newGame.gameOver;//true
+	// 				}
+	// 			}
+	// 		}
+	// 	});
+	// }
+};
+
 
 
 removeLife(){
@@ -114,10 +138,18 @@ removeLife(){
 //           gameOver();
 //      }
 // }
-	gameOver(){
-		console.log('sorry you lose');
-	}
-}//end Game Class
+gameOver(){
+	console.log('sorry you lose');
+}
+
+}
+
+
+
+
+
+
+
 
 
 
@@ -135,10 +167,9 @@ const start_btn = document.getElementById('btn__reset').addEventListener('click'
 
 
 document.getElementById('qwerty').addEventListener('click', (e) => {
-	if(e.target.className === 'key'){
-		target = e;
-		newGame.handleInteraction(target);
-	}
+	let target = e
+//	console.log(newGame);
+	newGame.handleInteraction(target);
 	event.preventDefault();
 });
 
