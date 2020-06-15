@@ -28,10 +28,21 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
 
 //does the keyup match any letter in the phrase
 //create a boolean, an HTMLCollection with 0 length/which is true, return false.
-	checkLetter(letter){////unsure
-console.log(document.getElementsByClassName(letter));
-		const boolean = document.getElementsByClassName(letter).length === 0;
-		return !boolean;
+	checkLetter(e, letter){
+		target = e;
+		console.log(target.innerHTML+ ' ' +letter);
+		let bol = 0;
+		//console.log(letter.includes(letter));
+		letter.forEach((letter, i) => {
+			if(target.innerHTML === letter){
+				bol += 1;
+			}
+		});
+		if(bol > 0) {
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	showMatchedLetter(e, letter){//works
@@ -82,14 +93,12 @@ handleInteraction(e){
 	let target = e.target;
 	target.disabled = true;
 	let chosenLetter = e.target.innerHTML;
-		if(this.activePhrase.checkLetter(letter)){//not a key
+		if(!this.activePhrase.checkLetter(target, letter)){//not a key
 			target.className = 'wrong'//do nothing/something
 			newGame.removeLife();
 		}else{
 			letter.forEach((letter, index) => {
-	console.log(letter+ '  ' +target.innerHTML);
 			if(target.innerHTML === letter){//click and letter match
-	console.log("letter is true");
 				target.className = 'chosen';
 				this.activePhrase.showMatchedLetter(letter);
 			}
