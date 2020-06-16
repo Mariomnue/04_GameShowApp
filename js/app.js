@@ -14,22 +14,21 @@ class Phrase{
 	addPhraseToDisplay(aPhrase){//needs Work
 		aPhrase = aPhrase;
 console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The other is the phrase. Test the program.
-		const ul = document.getElementById('phrase').firstElementChild;
-		letter = aPhrase.phrase.split('');
-		 	letter.forEach((letter, index) => {
-				let li = document.createElement('li');
-				li.innerHTML = letter;
-				if(letter === " "){
-					li.className =  `space`;
-					this.spaceCount += 1;//account for the spaces
-				}else{li.className = `hide letter ${letter}`};
-				ul.appendChild(li);
-				this.letterCount += 1;
-				if(this.spaceCount === this.wordCount ){
-					this.wordCount += 1;
-				}
-			});
-//console.log(ul);
+	const ul = document.getElementById('phrase').firstElementChild;
+	letter = aPhrase.phrase.split('');
+	 	letter.forEach((letter, index) => {
+			let li = document.createElement('li');
+			li.innerHTML = letter;
+			if(letter === " "){
+				li.className =  `space`;
+				this.spaceCount += 1;//account for the spaces
+			}else{li.className = `hide letter ${letter}`};
+			ul.appendChild(li);
+			this.letterCount += 1;
+			if(this.spaceCount === this.wordCount ){
+				this.wordCount += 1;
+			}
+		});
 	}
 
 
@@ -38,7 +37,7 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
 //does the keyup match any letter in the phrase
 //create a boolean, an HTMLCollection with 0 length/which is true, return false.
 //Read more about this in the #unit-04 thread
-	checkLetter(e, letter){
+	checkLetter(e, letter){//works
 		target = e;
 		console.log(target.innerHTML+ ' ' +letter);////this is a phrase
 		let bol = 0;
@@ -56,7 +55,6 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
 
 	showMatchedLetter(e, letter){//works
 		letter = e;
-//console.log(letter);
 		let chL = document.getElementsByClassName(`hide letter ${letter}`);
 		for(let i=0; i<chL.length; i++){
 			chL[i].classList.add('show');
@@ -64,7 +62,7 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
 			this.winCount += 1;
 		}
 	}
-}
+}//end Phrase class
 
 
 
@@ -86,6 +84,7 @@ constructor(){//works
 		 'Close But No Cigar'
 	 ];
 	 let activePhrase = null;
+	 this.score = '';
 
 }
 startGame(){//works
@@ -115,17 +114,16 @@ handleInteraction(e){
 				this.activePhrase.showMatchedLetter(letter);
 			}
 			newGame.checkForWin();
-			if(newGame.checkForWin ===  true){//did you win? needs work
+			if(newGame.checkForWin ===  true){//did you win?
 				newGame.gameOver;//true
 			}
 		});
 	}
-	//}
-}//);
+}
 //}//end handleInteraction
 
 
-removeLife(){
+removeLife(){//works
 	let lives = document.getElementsByClassName('tries');
 	lives[this.missed].firstElementChild.src = `images/lostHeart.png`;
 	this.missed += 1;
@@ -133,29 +131,33 @@ removeLife(){
 }
 
 
-checkForWin(){//needs work
+checkForWin(){//works
 	if(this.missed < 5){
 		if(this.activePhrase.letterCount === this.activePhrase.winCount + this.activePhrase.spaceCount){
-			console.log('You win!');
-			let div = document.getElementById('overlay');
-			div.className = 'win';////no like
+			this.score = 'winner'
+			newGame.gameOver();
 		}
      }else{
+		this.score = 'loser'
 		newGame.gameOver();
-		let div = document.getElementById('overlay');
-		div.className = lose;////no like
 	}
 
 }
 
-gameOver(){
+gameOver(){//works
 	const div = document.getElementById('overlay');
+	let message = document.getElementById('game-over-message');
 	div.style.display = '';
-	console.log('sorry you lost');
+	if(this.score === 'winner'){
+		message.innerHTML = "You won the game!"
+		div.className = 'win';////no like
+	}else if(this.score = 'loser'){
+		message.innerHTML = "Sorry, you lose"
+		div.className = 'lose';////no like
 	}
+}
 
 reset(){
-	//console.log(ul);
 	console.log('in the reset game function Bioch!');
 }
 
