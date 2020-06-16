@@ -5,6 +5,10 @@ let letter;
 class Phrase{
 	constructor(phrase){//works
 		this.phrase = phrase.toLowerCase();
+		this.letterCount = 0;
+		this.spaceCount  = 0;
+		this.winCount = 0;
+		this.wordCount = 0;
 }
 
 	addPhraseToDisplay(aPhrase){//needs Work
@@ -17,8 +21,13 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
 				li.innerHTML = letter;
 				if(letter === " "){
 					li.className =  `space`;
+					this.spaceCount += 1;//account for the spaces
 				}else{li.className = `hide letter ${letter}`};
 				ul.appendChild(li);
+				this.letterCount += 1;
+				if(this.spaceCount === this.wordCount ){
+					this.wordCount += 1;
+				}
 			});
 //console.log(ul);
 	}
@@ -28,11 +37,11 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
 
 //does the keyup match any letter in the phrase
 //create a boolean, an HTMLCollection with 0 length/which is true, return false.
+//Read more about this in the #unit-04 thread
 	checkLetter(e, letter){
 		target = e;
-		console.log(target.innerHTML+ ' ' +letter);
+		console.log(target.innerHTML+ ' ' +letter);////this is a phrase
 		let bol = 0;
-		//console.log(letter.includes(letter));
 		letter.forEach((letter, i) => {
 			if(target.innerHTML === letter){
 				bol += 1;
@@ -47,11 +56,13 @@ console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The
 
 	showMatchedLetter(e, letter){//works
 		letter = e;
+//console.log(letter);
 		let chL = document.getElementsByClassName(`hide letter ${letter}`);
 		for(let i=0; i<chL.length; i++){
 			chL[i].classList.add('show');
 			chL[i].classList.remove('hide');
-		};
+			this.winCount += 1;
+		}
 	}
 }
 
@@ -75,6 +86,7 @@ constructor(){//works
 		 'Close But No Cigar'
 	 ];
 	 let activePhrase = null;
+
 }
 startGame(){//works
 	 const div = document.getElementById('overlay');
@@ -102,6 +114,7 @@ handleInteraction(e){
 				target.className = 'chosen';
 				this.activePhrase.showMatchedLetter(letter);
 			}
+			newGame.checkForWin();
 			if(newGame.checkForWin ===  true){//did you win? needs work
 				newGame.gameOver;//true
 			}
@@ -118,14 +131,35 @@ removeLife(){
 	this.missed += 1;
 	if(this.missed === 5) this.gameOver();
 }
-// checkForWin(){
-//      if(win){
-//           gameOver();
-//      }
-// }
-	gameOver(){
-		console.log('sorry you lose');
+
+
+checkForWin(){//needs work
+	if(this.missed < 5){
+		if(this.activePhrase.letterCount === this.activePhrase.winCount + this.activePhrase.spaceCount){
+			console.log('You win!');
+			let div = document.getElementById('overlay');
+			div.className = 'win';////no like
+		}
+     }else{
+		newGame.gameOver();
+		let div = document.getElementById('overlay');
+		div.className = lose;////no like
 	}
+
+}
+
+gameOver(){
+	const div = document.getElementById('overlay');
+	div.style.display = '';
+	console.log('sorry you lost');
+	}
+
+reset(){
+	//console.log(ul);
+	console.log('in the reset game function Bioch!');
+}
+
+
 }//end Game Class
 
 
@@ -153,7 +187,7 @@ document.getElementById('qwerty').addEventListener('click', (e) => {
 
 document.getElementById('qwerty').addEventListener('keyup', (e) =>{
 	if(document.getElementById('overlay').style.display === 'none'){
-		newGame.handleInteraction(e.key);
+		this.newGame.handleInteraction(e.key);
 	}
 	event.preventDefault();
 });
