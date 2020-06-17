@@ -41,7 +41,7 @@ handleInteraction(letter){//works//keyboard clicked letter
      			btn.classList.add('wrong')//do nothing/something
      			newGame.removeLife();
      		}else{
-     			//letter.forEach((letter, index) => {
+     			letters.forEach((letter, index) => {
      			if(btn.innerHTML === letter){//click and letter match
      				btn.classList.add('chosen');
      				this.activePhrase.showMatchedLetter(letter);
@@ -49,7 +49,7 @@ handleInteraction(letter){//works//keyboard clicked letter
      			if(newGame.checkForWin() ===  true){//did you win?
      				newGame.gameOver;//true
      			}
-     		//});
+     		});
           }
      }
 })
@@ -62,7 +62,18 @@ removeLife(){//works
 	lives[this.missed].firstElementChild.src = `images/lostHeart.png`;
 	this.missed += 1;
 	if(this.missed === 5) this.gameOver();
+     //this.phraserAlert();
 }
+
+// phraserAlert(){
+//      let lives = document.getElementsByClassName('tries');
+//      console.log(this.missed);
+//      if(this.missed > 0 && this.missed < 3){
+//           lives[this.missed].firstElementChild.src = `images/liveYellowPhaser.jpg`;
+//      }else if(this.missed > 2 && this.missed < 5){
+//           lives[this.missed].firstElementChild.src = `images/liveRedPhaser.jpg`;
+//      }
+// }
 
 //check that missed lives is not 5 or more and the complete phrase is correct.
 //if all the letter on screen have been show.
@@ -76,7 +87,6 @@ checkForWin(){//works
 		this.score = 'loser'
 		newGame.gameOver();
 	}
-
 }
 
 //if all the phrase letters have been revealed
@@ -86,10 +96,10 @@ gameOver(){//works
 	div.style.display = '';
 	if(this.score === 'winner'){
 		message.innerHTML = "You won the game!"
-		div.className = 'win';////no like
+		div.className = 'win';//
 	}else if(this.score = 'loser'){
-		message.innerHTML = "Sorry, you lose"
-		div.className = 'lose';////no like
+		message.innerHTML = "Sorry, try again"
+		div.className = 'lose';//
 	}
 }
 

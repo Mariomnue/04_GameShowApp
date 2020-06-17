@@ -1,22 +1,21 @@
 /* Treehouse FSJS Techdegree
   * Project 4 - OOP Game App
   * Phrase.js */
-let letter;
+let letters;
 class Phrase{
 	constructor(phrase){//works
 		this.phrase = phrase.toLowerCase();
 		this.letterCount = 0;
 		this.spaceCount  = 0;
 		this.winCount = 0;
-		this.wordCount = 0;
 }
 
 	addPhraseToDisplay(aPhrase){//works
 		aPhrase = aPhrase;
 console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The other is the phrase. Test the program.
 	const ul = document.getElementById('phrase').firstElementChild;
-	letter = aPhrase.phrase.split('');
-	 	letter.forEach((letter, index) => {
+	letters = aPhrase.phrase.split('');
+	 	letters.forEach((letter, index) => {
 			let li = document.createElement('li');
 			li.innerHTML = letter;
 			if(letter === " "){

@@ -1,10 +1,12 @@
 /* Main styles */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&Roboto:300');
-
+/* @import url('https://i.gifer.com/VfDs.gif');
+@import url('https://i.gifer.com/8cAg.gif'); */
 /* Variables */
 
 :root {
-  --color-win: #78CF82;
+  /* --color-win: #78CF82; */
+  --color-win: #002699;
   --color-lose: #D94545;
   --color-start: #5b85b7;
   --color-neutral: #445069;
@@ -24,6 +26,7 @@
 }
 
 body {
+  background-color: #fff7e6;
   justify-content: space-evenly;
   flex-direction: column;
   display: flex;
