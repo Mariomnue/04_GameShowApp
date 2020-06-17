@@ -1,195 +1,33 @@
-/* Treehouse FSJS Techdegree
-  * Project 4 - OOP Game App
-  * Phrase.js */
-let letter;
-class Phrase{
-	constructor(phrase){//works
-		this.phrase = phrase.toLowerCase();
-		this.letterCount = 0;
-		this.spaceCount  = 0;
-		this.winCount = 0;
-		this.wordCount = 0;
-}
-
-	addPhraseToDisplay(aPhrase){//needs Work
-		aPhrase = aPhrase;
-console.log("aPhrase: " +aPhrase.phrase);//aPhase is still an object. LEAVE. The other is the phrase. Test the program.
-	const ul = document.getElementById('phrase').firstElementChild;
-	letter = aPhrase.phrase.split('');
-	 	letter.forEach((letter, index) => {
-			let li = document.createElement('li');
-			li.innerHTML = letter;
-			if(letter === " "){
-				li.className =  `space`;
-				this.spaceCount += 1;//account for the spaces
-			}else{li.className = `hide letter ${letter}`};
-			ul.appendChild(li);
-			this.letterCount += 1;
-			if(this.spaceCount === this.wordCount ){
-				this.wordCount += 1;
-			}
-		});
-	}
-
-
-
-
-//does the keyup match any letter in the phrase
-//create a boolean, an HTMLCollection with 0 length/which is true, return false.
-//Read more about this in the #unit-04 thread
-	checkLetter(e, letter){//works
-		target = e;
-		console.log(target.innerHTML+ ' ' +letter);////this is a phrase
-		let bol = 0;
-		letter.forEach((letter, i) => {
-			if(target.innerHTML === letter){
-				bol += 1;
-			}
-		});
-		if(bol > 0) {
-			return true;
-		}else{
-			return false;
-		}
-	}
-
-	showMatchedLetter(e, letter){//works
-		letter = e;
-		let chL = document.getElementsByClassName(`hide letter ${letter}`);
-		for(let i=0; i<chL.length; i++){
-			chL[i].classList.add('show');
-			chL[i].classList.remove('hide');
-			this.winCount += 1;
-		}
-	}
-}//end Phrase class
-
-
-
-
-
-
-/* Treehouse FSJS Techdegree
-* Project 4 - OOP Game App
-* Game.js */
-let phrases = [];
-class Game{
-constructor(){//works
-	 this.missed = 0;
-	 phrases = [
-		 'I Smell a Rat',
-		 'Fit as a Fiddle',
-		 'A Piece of Cake',
-		 'Put a Sock In It',
-		 'Close But No Cigar'
-	 ];
-	 let activePhrase = null;
-	 this.score = '';
-
-}
-startGame(){//works
-	 const div = document.getElementById('overlay');
-	 div.style.display = 'none';
-	 div.disabled = true;//make the overlay go away
-	 this.activePhrase = this.getRandomPhrase();
-	 this.activePhrase.addPhraseToDisplay(this.activePhrase);
-}
-
-getRandomPhrase(){//works
-	let aPhrase = new Phrase(`${phrases[Math.floor(Math.random()*phrases.length)]}`)
-	return aPhrase //return the object
-};
-
-handleInteraction(e){
-	let target = e.target;
-	target.disabled = true;
-	let chosenLetter = e.target.innerHTML;
-		if(!this.activePhrase.checkLetter(target, letter)){//not a key
-			target.className = 'wrong'//do nothing/something
-			newGame.removeLife();
-		}else{
-			letter.forEach((letter, index) => {
-			if(target.innerHTML === letter){//click and letter match
-				target.className = 'chosen';
-				this.activePhrase.showMatchedLetter(letter);
-			}
-			newGame.checkForWin();
-			if(newGame.checkForWin ===  true){//did you win?
-				newGame.gameOver;//true
-			}
-		});
-	}
-}
-//}//end handleInteraction
-
-
-removeLife(){//works
-	let lives = document.getElementsByClassName('tries');
-	lives[this.missed].firstElementChild.src = `images/lostHeart.png`;
-	this.missed += 1;
-	if(this.missed === 5) this.gameOver();
-}
-
-
-checkForWin(){//works
-	if(this.missed < 5){
-		if(this.activePhrase.letterCount === this.activePhrase.winCount + this.activePhrase.spaceCount){
-			this.score = 'winner'
-			newGame.gameOver();
-		}
-     }else{
-		this.score = 'loser'
-		newGame.gameOver();
-	}
-
-}
-
-gameOver(){//works
-	const div = document.getElementById('overlay');
-	let message = document.getElementById('game-over-message');
-	div.style.display = '';
-	if(this.score === 'winner'){
-		message.innerHTML = "You won the game!"
-		div.className = 'win';////no like
-	}else if(this.score = 'loser'){
-		message.innerHTML = "Sorry, you lose"
-		div.className = 'lose';////no like
-	}
-}
-
-reset(){
-	console.log('in the reset game function Bioch!');
-}
-
-
-}//end Game Class
-
-
-
-
-
  /* Treehouse FSJS Techdegree
   * Project 4 - OOP Game App
   * app.js */
 let newGame;
 const start_btn = document.getElementById('btn__reset').addEventListener('click', (e) =>{
+	if(newGame){
+		newGame.reset();
+	}
 	newGame = new Game();
 	newGame.startGame();
+	document.addEventListener('keyup', (e) =>{
+		newGame.handleInteraction(e.key);//keyboard does not have a class
+		event.preventDefault();
+	})
 	event.preventDefault();
 })
 
 
 document.getElementById('qwerty').addEventListener('click', (e) => {
+console.log(e.target.className);
 	if(e.target.className === 'key'){
-		target = e;
-		newGame.handleInteraction(target);
+		newGame.handleInteraction(e.target.innerText);
+		console.log(e.target.innerText);
 	}
 	event.preventDefault();
 });
 
 document.getElementById('qwerty').addEventListener('keyup', (e) =>{
 	if(document.getElementById('overlay').style.display === 'none'){
-		this.newGame.handleInteraction(e.key);
+		newGame.handleInteraction(e.innerHTML);
 	}
 	event.preventDefault();
 });
