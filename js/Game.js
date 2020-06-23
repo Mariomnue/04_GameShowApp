@@ -65,16 +65,6 @@ removeLife(){//works
      //this.phraserAlert();
 }
 
-// phraserAlert(){
-//      let lives = document.getElementsByClassName('tries');
-//      console.log(this.missed);
-//      if(this.missed > 0 && this.missed < 3){
-//           lives[this.missed].firstElementChild.src = `images/liveYellowPhaser.jpg`;
-//      }else if(this.missed > 2 && this.missed < 5){
-//           lives[this.missed].firstElementChild.src = `images/liveRedPhaser.jpg`;
-//      }
-// }
-
 //check that missed lives is not 5 or more and the complete phrase is correct.
 //if all the letter on screen have been show.
 checkForWin(){//works
